@@ -1,13 +1,15 @@
-from random import *
+import random
+
+# References:
+# Prim's Algorithm Implementation in Ruby: http://weblog.jamisbuck.org/2011/1/10/maze-generation-prim-s-algorithm
 
 INFINITY = 10
 UNMARKED = -1
-OPEN = -4
-CLOSED = 1
-NEIGHBOR = -5
+OPEN = 0x10
+NEIGHBOR = 0x20
 N, S, E, W = 1, 2, 4, 8
 seed = 111111
-SIZE = 6
+SIZE = 33
 
 # maze maker
 def mazeInit(size):
@@ -29,9 +31,9 @@ def addNeighbors(x, y, maze, neighbors):
         maze[y][x] = NEIGHBOR
         neighbors.append((x,y))
 
-
+# mark open
 def mark(x, y, maze, neighbors):
-    maze[y][x] == OPEN
+    maze[y][x] = OPEN
     addNeighbors(x-1, y, maze, neighbors)
     addNeighbors(x+1, y, maze, neighbors)
     addNeighbors(x, y-1, maze, neighbors)
@@ -103,11 +105,12 @@ def displayMaze(maze):
 maze = mazeInit(SIZE)
 neighbors = []
 steps = 0
-mark(randint(0,len(maze)-1),randint(0,len(maze)-1), maze, neighbors)
+random.seed(seed)
+mark(random.randint(0,len(maze)-1),random.randint(0,len(maze)-1), maze, neighbors)
 while(neighbors):
-    x, y = neighbors.pop(randint(0, len(neighbors)-1))
+    x, y = neighbors.pop(random.randint(0, len(neighbors)-1))
     n = getNeighbors(x,y)
-    randi= randint(0, len(n)-1)
+    randi= random.randint(0, len(n)-1)
     # print "len(n): ", len(n)
     # print "randi: ", randi
     # print "n[]: ", n
